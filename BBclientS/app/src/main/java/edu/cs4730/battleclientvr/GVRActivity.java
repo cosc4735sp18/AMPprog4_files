@@ -422,12 +422,63 @@ public class GVRActivity extends GvrActivity {
     }
 
     // We receive all events from the Controller through this listener. In this example, our
-    // listener handles both ControllerManager.EventListener and Controller.EventListener events.
+    // listener handles both ControllerManager.EventListener and Controller.EventListener events. which is the daydream.
 /*
     private class EventListener extends Controller.EventListener
             implements ControllerManager.EventListener {
     }
 */
+
+/* bluetooth controllers use the following 
+
+    //getting the buttons.  note, there is down and up action.  this only
+    //looks for down actions.
+    @Override
+    public boolean dispatchKeyEvent(android.view.KeyEvent event) {
+        if ((event.getSource() & InputDevice.SOURCE_GAMEPAD)
+                == InputDevice.SOURCE_GAMEPAD) {
+
+            if (game) {  //game has started, so accept commands.
+            	  synchronized (mynetwork.cmd) {
+                        mynetwork.cmd = "fire " + whatever way you figured to fire.;
+                    }
+
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+
+    //getting the "joystick" or dpad motion.  likely more the move direction.
+    @Override
+    public boolean onGenericMotionEvent(android.view.MotionEvent motionEvent) {
+        float xaxis = motionEvent.getAxisValue(MotionEvent.AXIS_HAT_X);
+        float yaxis = motionEvent.getAxisValue(MotionEvent.AXIS_HAT_Y);
+
+        // use the DEFAIRY one, so ignore this code unless you are using something else.
+        //if ( ((Float.compare(motionEvent.getAxisValue(MotionEvent.AXIS_X), 0.0f) != 0)) ||
+        //        ((Float.compare(motionEvent.getAxisValue(MotionEvent.AXIS_Y), 0.0f) != 0))  )   {
+        //    xaxis = motionEvent.getAxisValue(MotionEvent.AXIS_X);
+        //    yaxis = motionEvent.getAxisValue(MotionEvent.AXIS_Y);
+       // }
+           
+        boolean handled = false;
+        if (!game) {  //still in the connection mode.
+            return handled;
+        }
+
+
+        //assuming use joystick to move, then calculate the info and call onMove()  and set handled=true.
+
+
+        return handled;
+    }
+
+
+*/
+
 
 
 }
